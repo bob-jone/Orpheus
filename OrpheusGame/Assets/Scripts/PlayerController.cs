@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public Text text;
@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = jumpVelocity;
             jumpCount++;
+
+            anim.SetBool("jump", true);
         }
     }
     public void DashDown()
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = mathM.collisions.below;
         if (isGrounded)
         {
+            anim.SetBool("isWalking", true);
+            anim.SetBool("jump", false);
             jumpCount = 0;
         }
     }
@@ -70,12 +74,22 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = 0;
         }
+        if (mathM.collisions.right|| mathM.collisions.right|| mathM.collisions.below|| mathM.collisions.above)
+        {
+            if (mathM.collisions.collidedObject.tag.Equals("Item"))
+            {
+                Globals.tempo += 10;
+                Destroy(mathM.collisions.collidedObject);
+            }
+        }
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 
         if (transform.position.y < -20)
         {
-            transform.position = new Vector2(initX, initY);
+            Globals.globalScore = (int)((transform.position.x - 6) / 10);
+            SceneManager.LoadScene("ENDSCREEN");
+            
         }
 
         CheckGrounded();

@@ -22,9 +22,10 @@ public class Globals : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public static int globalScore;
     public string musicKey = "c_major";
     public static int tempo = 80;
     public static bool playingPerc;
-
+    public static Dictionary<string, int> mostPlayed = new Dictionary<string, int>();
     public bool streamerMode = false;
 }
