@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class NoteHandler : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class NoteHandler : MonoBehaviour
     bool currentIntervalPositive;
 
     public string inputMode = "octaveASDF";
-
+    public Text noteText;
     // create dictionaries that link a note to it's position on the piano keyboard and vice versa
     Dictionary<int, string> noteDict = new Dictionary<int, string>();
     Dictionary<string, int> reverseNoteDict = new Dictionary<string, int>();
@@ -182,6 +183,7 @@ public class NoteHandler : MonoBehaviour
         }
         s.source.Play();
         currentKeyNumber = s.keyNumber;
+        noteText.text = name;
     }
 
     public void PlayNote(int keyNumber,string instrumentType)

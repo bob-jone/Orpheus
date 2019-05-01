@@ -23,9 +23,13 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     float initX;
     MathManager mathM;
+    float initY;
+
     // Start is called before the first frame update
     void Start()
     {
+        initX = transform.position.x;
+        initY = transform.position.y;
         t = Globals.tempo/80;
         mathM = GetComponent <MathManager>();
         jumpVelocity = gravity * timeToJumpApex;
@@ -62,7 +66,7 @@ public class PlayerController : MonoBehaviour
         velocity.x = moveSpeed * t;
         velocity.y += ((gravity * -1) * Time.deltaTime);
 
-        if (mathM.collisions.above || mathM.collisions.below)
+        if (mathM.collisions.below)
         {
             velocity.y = 0;
         }
@@ -71,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.y < -20)
         {
-
+            transform.position = new Vector2(initX, initY);
         }
 
         CheckGrounded();
@@ -83,5 +87,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("isGrounded: " + isGrounded);
             Debug.Log("jumpCount: " + jumpCount);
         }
+        text.text = ((int)((transform.position.x-6)/10)).ToString();
     }
 }
